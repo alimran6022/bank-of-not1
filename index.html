@@ -1,26 +1,55 @@
-<div class="container" style="text-align:center; font-family: sans-serif; background:#0b0e11; color:white; padding:20px;">
-    <h1 style="color:gold;"><span id="total-balance">0.0000</span> NOT</h1>
-    <button style="background:#3498db; border:none; color:white; padding:10px 50px; border-radius:10px; margin-bottom:20px;">Withdraw</button>
+let mainBal = 0.0000;
+let fMine = 0.000000;
+let stMine = 0.000000;
+let slMine = 0.000000;
 
-    <div style="background:#1c1f26; padding:15px; border-radius:15px; margin-bottom:15px; border:1px solid #333;">
-        <p>Live Mining (Free - 10 Days)</p>
-        <h2 id="free-counter">0.000000</h2>
-        <button onclick="claim('free')" style="background:#27ae60; border:none; color:white; width:100%; padding:10px; border-radius:10px;">Claim Mining</button>
-    </div>
+let isStActive = false;
+let isSlActive = false;
 
-    <div style="background:#1c1f26; padding:15px; border-radius:15px; margin-bottom:15px; border:1px solid #333;">
-        <p>Standard Plan (100+ NOT)</p>
-        <p style="color:orange; font-size:12px;">Daily 3% | 100 Days</p>
-        <h2 id="standard-counter">0.000000</h2>
-        <button onclick="invest('standard')" style="background:transparent; border:1px solid #3498db; color:#3498db; padding:5px 15px; border-radius:5px; margin-bottom:10px;">Invest / Re-invest</button>
-        <button onclick="claim('standard')" style="background:#27ae60; border:none; color:white; width:100%; padding:10px; border-radius:10px;">Claim</button>
-    </div>
+// মাইনিং ফাংশন যা প্রতি সেকেন্ডে আপডেট হবে
+function runMining() {
+    setInterval(() => {
+        // ১. ফ্রি মাইনিং - এটি অটোমেটিক চলবে
+        fMine += 0.000002;
+        let fEl = document.getElementById('free-counter');
+        if(fEl) {
+            fEl.innerText = fMine.toFixed(6);
+        }
 
-    <div style="background:#1c1f26; padding:15px; border-radius:15px; border:1px solid #333;">
-        <p>Silver Plan (100+ NOT)</p>
-        <p style="color:orange; font-size:12px;">Daily 4% | 60 Days</p>
-        <h2 id="silver-counter">0.000000</h2>
-        <button onclick="invest('silver')" style="background:transparent; border:1px solid #3498db; color:#3498db; padding:5px 15px; border-radius:5px; margin-bottom:10px;">Invest / Re-invest</button>
-        <button onclick="claim('silver')" style="background:#27ae60; border:none; color:white; width:100%; padding:10px; border-radius:10px;">Claim</button>
-    </div>
-</div>
+        // ২. স্ট্যান্ডার্ড প্ল্যান (ইনভেস্ট করলে চলবে)
+        let stEl = document.getElementById('standard-counter');
+        if(isStActive && stEl) {
+            stMine += 0.000008;
+            stEl.innerText = stMine.toFixed(6);
+        }
+
+        // ৩. সিলভার প্ল্যান (ইনভেস্ট করলে চলবে)
+        let slEl = document.getElementById('silver-counter');
+        if(isSlActive && slEl) {
+            slMine += 0.000015;
+            slEl.innerText = slMine.toFixed(6);
+        }
+    }, 1000);
+}
+
+function invest(p) {
+    if(confirm("Do you want to start this mining plan?")) {
+        if(p === 'standard') isStActive = true;
+        if(p === 'silver') isSlActive = true;
+        alert("Success! Mining Started.");
+    }
+}
+
+function claim(t) {
+    if(t === 'free') { mainBal += fMine; fMine = 0; }
+    else if(t === 'standard' && isStActive) { mainBal += stMine; stMine = 0; }
+    else if(t === 'silver' && isSlActive) { mainBal += slMine; slMine = 0; }
+    else { alert("Please invest first!"); return; }
+    
+    let bEl = document.getElementById('total-balance');
+    if(bEl) bEl.innerText = mainBal.toFixed(4) + " NOT";
+    alert("Claim Success!");
+}
+
+// অ্যাপ লোড হওয়ার সাথে সাথে মাইনিং শুরু হবে
+window.onload = runMining;
