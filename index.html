@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank of NOT</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <div class="running-days">
+            <p>App Running: <span id="days-counter">1</span> Days</p>
+        </div>
+
+        <div class="balance-section">
+            <h3>Main Balance</h3>
+            <h1><span id="main-balance">0.0000</span> NOT</h1>
+        </div>
+
+        <div class="action-section">
+            <div id="ton-connect"></div>
+            <button class="btn-withdraw" onclick="handleWithdraw()">Withdraw</button>
+        </div>
+
+        <div class="mining-card">
+            <p>Live Mining (Free - 10 Days)</p>
+            <h2 id="live-mining">0.000000</h2>
+            <button class="btn-claim" onclick="claimMining()">Claim Mining</button>
+        </div>
+<div class="premium-plans">
+            
+            <div class="mining-card premium">
+                <p>Standard Plan (100+ NOT)</p>
+                <div class="plan-info">
+                    <span>Daily 3%</span> | <span>100 Days</span>
+                </div>
+                <h2 id="mining-p2">0.000000</h2>
+                <button class="btn-invest" onclick="invest(100, 3)">Invest / Re-invest</button>
+                <button class="btn-claim-small" onclick="claim(2)">Claim</button>
+            </div>
+
+            <div class="mining-card premium">
+                <p>Silver Plan (100+ NOT)</p>
+                <div class="plan-info">
+                    <span>Daily 4%</span> | <span>60 Days</span>
+                </div>
+                <h2 id="mining-p3">0.000000</h2>
+                <button class="btn-invest" onclick="invest(100, 4)">Invest / Re-invest</button>
+                <button class="btn-claim-small" onclick="claim(3)">Claim</button>
+            </div>
+
+            <div class="mining-card premium">
+                <p>Gold Plan (100+ NOT)</p>
+                <div class="plan-info">
+                    <span>Daily 5%</span> | <span>40 Days</span>
+                </div>
+                <h2 id="mining-p4">0.000000</h2>
+                <button class="btn-invest" onclick="invest(100, 5)">Invest / Re-invest</button>
+                <button class="btn-claim-small" onclick="claim(4)">Claim</button>
+            </div>
+
+            <div class="mining-card premium">
+                <p>Platinum Plan (100+ NOT)</p>
+                <div class="plan-info">
+                    <span>Daily 6%</span> | <span>29 Days</span>
+                </div>
+                <h2 id="mining-p5">0.000000</h2>
+                <button class="btn-invest" onclick="invest(100, 6)">Invest / Re-invest</button>
+                <button class="btn-claim-small" onclick="claim(5)">Claim</button>
+            </div>
+
+        </div>
+        <div class="stats-row">
+            <div class="stat-item">
+                <span>Total Re-invest</span>
+                <p id="total-reinvest">0.00</p>
+            </div>
+            <div class="stat-item">
+                <span>Total Withdraw</span>
+                <p id="total-withdraw">0.00</p>
+            </div>
+        </div>
+
+        <div class="referral-box">
+            <h3>Referral Program</h3>
+            <div class="copy-box">
+                <input type="text" id="ref-link" value="https://t.me/BankofNOTBot?start=user123" readonly>
+                <button onclick="copyRef()">Copy</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
